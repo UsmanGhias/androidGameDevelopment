@@ -104,16 +104,16 @@ public class DbHelper extends SQLiteOpenHelper {
     public void addTestResult(String questions, String selections, String correctAnswers, int score) {
         SQLiteDatabase db = getWritableDatabase();
         ContentValues values = new ContentValues();
-        values.put(DatabaseHelper.COLUMN_QUESTIONS, questions);
-        values.put(DatabaseHelper.COLUMN_SELECTIONS, selections);
-        values.put(DatabaseHelper.COLUMN_CORRECT_ANSWERS, correctAnswers);
-        values.put(DatabaseHelper.COLUMN_SCORE, score);
-        db.insert(DatabaseHelper.TABLE_RESULTS, null, values);
+        values.put(COLUMN_QUESTIONS, questions);
+        values.put(COLUMN_SELECTIONS, selections);
+        values.put(COLUMN_CORRECT_ANSWERS, correctAnswers);
+        values.put(COLUMN_SCORE, score);
+        db.insert(TABLE_RESULTS, null, values);
         db.close();
     }
 
     public Cursor getAllResults() {
         SQLiteDatabase db = getReadableDatabase();
-        return db.rawQuery("SELECT * FROM " + DatabaseHelper.TABLE_RESULTS, null);
+        return db.rawQuery("SELECT * FROM " + TABLE_RESULTS, null);
     }
 }
