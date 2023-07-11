@@ -1,0 +1,119 @@
+package usmanghias.org.lettergame;
+
+import android.content.ContentValues;
+import android.content.Context;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
+import android.database.sqlite.SQLiteOpenHelper;
+
+import java.util.ArrayList;
+import java.util.List;
+
+public class DbHelper extends SQLiteOpenHelper {
+    private static final String DATABASE_NAME = "Android.db";
+    private static final String TABLE_NAME = "Alphabets";
+    private static final String COLUMN_INDEX = "ind";
+    private static final String COLUMN_ANS = "answer";
+    private static final String COLUMN_CORRECT = "correct";
+    private static final String COLUMN_QUES = "question";
+
+    public DbHelper(Context context) {
+        super(context, DATABASE_NAME, null, 1);
+    }
+
+    @Override
+    public void onCreate(SQLiteDatabase db) {
+        String sql = "CREATE TABLE IF NOT EXISTS " + TABLE_NAME + "("
+                + COLUMN_INDEX + " INTEGER,"
+                + COLUMN_CORRECT + " TEXT,"
+                + COLUMN_QUES + " TEXT,"
+                + COLUMN_ANS + " TEXT"
+                + ")";
+        db.execSQL(sql);
+    }
+
+    @Override
+    public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
+        String sql = "DROP TABLE IF EXISTS " + TABLE_NAME;
+        db.execSQL(sql);
+        onCreate(db);
+    }
+
+    public void insert(String ans, String correct, String ques) {
+        SQLiteDatabase db = getWritableDatabase();
+
+        ContentValues values = new ContentValues();
+        values.put(COLUMN_CORRECT, correct);
+        values.put(COLUMN_ANS, ans);
+        values.put(COLUMN_QUES, ques);
+
+        db.insert(TABLE_NAME, null, values);
+        db.close();
+    }
+
+    public List<String> getResult() {
+        List<String> answers = new ArrayList<>();
+
+        String sql = "SELECT * FROM " + TABLE_NAME;
+
+        SQLiteDatabase db = getWritableDatabase();
+        Cursor cursor = db.rawQuery(sql, null);
+        if (cursor.moveToLast()) {
+            String ans = cursor.getString(cursor.getColumnIndex(COLUMN_ANS));
+            String correct = cursor.getString(cursor.getColumnIndex(COLUMN_CORRECT));
+            String ques = cursor.getString(cursor.getColumnIndex(COLUMN_QUES));
+
+            answers.add(ans);
+            answers.add(correct);
+            answers.add(ques);
+        }
+
+        cursor.close();
+        db.close();
+
+        return answers;
+    }
+
+    public List<String> getFiveResult() {
+        int count = 0;
+        List<String> answers = new ArrayList<>();
+
+        String sql = "SELECT * FROM " + TABLE_NAME;
+
+        SQLiteDatabase db = getWritableDatabase();
+        Cursor cursor = db.rawQuery(sql, null);
+        if (cursor.moveToLast()) {
+            do {
+                count += 1;
+                String ans = cursor.getString(cursor.getColumnIndex(COLUMN_ANS));
+                String correct = cursor.getString(cursor.getColumnIndex(COLUMN_CORRECT));
+                String ques = cursor.getString(cursor.getColumnIndex(COLUMN_QUES));
+
+                answers.add(ans);
+                answers.add(correct);
+                answers.add(ques);
+            } while (cursor.moveToPrevious() && count < 3);
+        }
+
+        cursor.close();
+        db.close();
+
+        return answers;
+    }
+
+    public void addTestResult(String questions, String selections, String correctAnswers, int score) {
+        SQLiteDatabase db = getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put(DatabaseHelper.COLUMN_QUESTIONS, questions);
+        values.put(DatabaseHelper.COLUMN_SELECTIONS, selections);
+        values.put(DatabaseHelper.COLUMN_CORRECT_ANSWERS, correctAnswers);
+        values.put(DatabaseHelper.COLUMN_SCORE, score);
+        db.insert(DatabaseHelper.TABLE_RESULTS, null, values);
+        db.close();
+    }
+
+    public Cursor getAllResults() {
+        SQLiteDatabase db = getReadableDatabase();
+        return db.rawQuery("SELECT * FROM " + DatabaseHelper.TABLE_RESULTS, null);
+    }
+}
