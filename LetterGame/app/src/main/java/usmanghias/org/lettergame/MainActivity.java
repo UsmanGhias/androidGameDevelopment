@@ -1,107 +1,157 @@
-package usmanghias.org.lettergame; // Adjusted package name based on the tree structure
+package usmanghias.org.lettergame;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.app.ActionBarDrawerToggle;
-import androidx.appcompat.widget.Toolbar;
-import androidx.core.view.GravityCompat;
-import androidx.drawerlayout.widget.DrawerLayout;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentTransaction;
 
+import android.content.Intent;
 import android.os.Bundle;
-import android.view.MenuItem;
-import android.widget.Toast;
+import android.os.Handler;
+import android.view.View;
+import android.widget.Button;
+import android.widget.TextView;
 
-import com.google.android.material.navigation.NavigationView;
+import java.util.Random;
 
 public class MainActivity extends AppCompatActivity {
 
-    NavigationView navigationView;
-    DrawerLayout drawerLayout;
-    Toolbar toolbar;
-    ActionBarDrawerToggle toggle;
+    private TextView letterTextView, answerTextView, s;
+    Button submit, res;
+    DbHelper db;
+    private char[] skyLetters = {'b', 'd', 'f', 'h', 'k', 'l', 't'};
+    private char[] rootLetters = {'g', 'j', 'p', 'q', 'y'};
+    private char[] grassLetters = {'a', 'c', 'e', 'i', 'm', 'n', 'o', 'r', 's', 'u', 'v', 'w', 'x', 'z'};
+    private String answerString = "";
 
-    @Override
-    public void onBackPressed() {
-        if (drawerLayout.isDrawerOpen(GravityCompat.START)) {
-            drawerLayout.closeDrawer(GravityCompat.START);
-        } else {
-            super.onBackPressed();
-        }
-    }
+    private String correct="";
+    private String ans = "";
+
+    private String ques = "";
+    int counter=0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
+        submit = findViewById(R.id.submit);
+        submit.setVisibility(View.GONE);
 
-        navigationView = findViewById(R.id.nav_view);
-        drawerLayout = findViewById(R.id.drawer);
+        res = findViewById(R.id.button2);
+        res.setVisibility(View.GONE);
 
-        toggle = new ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.open, R.string.close);
-        drawerLayout.addDrawerListener(toggle);
-        toggle.syncState();
+        letterTextView = findViewById(R.id.letter_text_view);
+        letterTextView.setText(getRandomLetter());
 
-        MyFragment fragment = new MyFragment();
-
-        try {
-            FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-            transaction.replace(R.id.fragment_container, fragment);
-            transaction.commit();
-        } catch (Exception e) {
-            Toast.makeText(getApplicationContext(), "Error: " + e.getMessage(), Toast.LENGTH_SHORT).show();
-        }
-
-        navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+        Button skyButton = findViewById(R.id.sky_button);
+        skyButton.setOnClickListener(new View.OnClickListener() {
             @Override
-            public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
-                try {
-                    menuItem.setChecked(true);
-                    drawerLayout.closeDrawers();
-
-                    int id = menuItem.getItemId();
-                    Fragment fragment = null;
-
-                    if (id == R.id.playgame) {
-                        MyFragment a = new MyFragment();
-                        loadFragment(a);
-                    } else if (id == R.id.showresults) {
-                        DisplayFragment b = new DisplayFragment();
-                        loadFragment(b);
-                    }
-
-                    return true;
-                } catch (Exception e) {
-                    Toast.makeText(getApplicationContext(), "Error: " + e.getMessage(), Toast.LENGTH_SHORT).show();
-                    return false;
+            public void onClick(View v) {
+                ans += '0';
+                if (answerString.equals("Sky Letter")) {
+                    // Perform the desired action for correct answer
+                } else {
+                    // Perform the desired action for incorrect answer
                 }
+
+                // Wait for 1 second and create a new question
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        letterTextView.setText(getRandomLetter());
+                    }
+                }, 1000); // 1000 milliseconds = 1 second
+            }
+        });
+
+        Button grassButton = findViewById(R.id.grass_button);
+        grassButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ans += '1';
+                if (answerString.equals("Grass Letter")) {
+                    // Perform the desired action for correct answer
+                } else {
+                    // Perform the desired action for incorrect answer
+                }
+                // Wait for 1 second and create a new question
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        letterTextView.setText(getRandomLetter());
+                    }
+                }, 1000); // 1000 milliseconds = 1 second
+            }
+        });
+
+        Button rootButton = findViewById(R.id.root_button);
+        rootButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ans += '2';
+                if (answerString.equals("Root Letter")) {
+                    // Perform the desired action for correct answer
+                } else {
+                    // Perform the desired action for incorrect answer
+                }
+                // Wait for 1 second and create a new question
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        letterTextView.setText(getRandomLetter());
+                    }
+                }, 1000); // 1000 milliseconds = 1 second
             }
         });
     }
 
-    // Load MyFragment
-    private void loadFragment(MyFragment fragment) {
-        try {
-            FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-            transaction.replace(R.id.fragment_container, fragment);
-            transaction.commit();
-        } catch (Exception e) {
-            Toast.makeText(getApplicationContext(), "Error: " + e.getMessage(), Toast.LENGTH_SHORT).show();
-        }
-    }
+    private String getRandomLetter() {
+        if (counter == 5) {
+            submit.setVisibility(View.VISIBLE);
+            submit.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    db = new DbHelper(MainActivity.this);
+                    db.insert(ans, correct, ques);
+                    s = findViewById(R.id.submission);
+                    s.setText("Your test is submitted");
 
-    // Load DisplayFragment
-    private void loadFragment(DisplayFragment fragment) {
-        try {
-            FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-            transaction.replace(R.id.fragment_container, fragment);
-            transaction.commit();
-        } catch (Exception e) {
-            Toast.makeText(getApplicationContext(), "Error: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                    res.setVisibility(View.VISIBLE);
+                    submit.setVisibility(View.GONE);
+                    res.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            Intent intent2 = new Intent(MainActivity.this, Result.class);
+                            startActivity(intent2);
+                        }
+                    });
+
+                }
+            });
+        } else {
+            counter = counter + 1;
+            Random random = new Random();
+            int category = random.nextInt(3);
+            char letter;
+            switch (category) {
+                case 0:
+                    letter = skyLetters[random.nextInt(skyLetters.length)];
+                    answerString = "Sky Letter";
+                    correct += '0';
+                    break;
+                case 1:
+                    letter = grassLetters[random.nextInt(grassLetters.length)];
+                    answerString = "Grass Letter";
+                    correct += '1';
+                    break;
+                default:
+                    letter = rootLetters[random.nextInt(rootLetters.length)];
+                    answerString = "Root Letter";
+                    correct += '2';
+                    break;
+            }
+            ques = ques + String.valueOf(letter);
+            return String.valueOf(letter);
         }
+
+        return null;
     }
 }
