@@ -17,33 +17,33 @@ tools:context=".Drawer">
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/toolbar"
-        app:title="Alphabet App"
+        app:title="COD Crafters"
         app:titleTextColor="@color/cardview_light_background"
-        android:background="@color/purple_700"
+        android:background="#228b22"
         />
 
     <TextView
         android:layout_width="wrap_content"
-        android:layout_height="130dp"
+        android:layout_height="105dp"
         android:layout_below="@+id/toolbar"
-        android:layout_marginTop="40dp"
         android:layout_marginStart="110dp"
+        android:layout_marginTop="40dp"
         android:fontFamily="sans-serif-black"
 
         android:gravity="center"
-        android:text="Welcome to Alphabets App"
-        android:textColor="#31638F"
+        android:text="Welcome to Letters Game"
+        android:textColor="#9400d3"
         android:textSize="40sp" />
 
     <Button
         android:id="@+id/button"
-        android:layout_width="wrap_content"
-        android:layout_marginTop="10dp"
-        android:layout_marginStart="250dp"
-        android:backgroundTint="#31638F"
-        android:textColor="@color/white"
+        android:layout_width="189dp"
         android:layout_height="wrap_content"
-        android:text="Take the test" />
+        android:layout_marginStart="250dp"
+        android:layout_marginTop="10dp"
+        android:backgroundTint="#228b22"
+        android:text="Lets Play Hurahh"
+        android:textColor="@color/white" />
 </LinearLayout>
 
 <com.google.android.material.navigation.NavigationView
