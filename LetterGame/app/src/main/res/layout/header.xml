@@ -1,21 +1,36 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/black">
+    android:orientation="vertical"
+    android:background="#31638F"
+    android:layout_height="match_parent">
 
-    <ImageView
-        android:layout_width="125dp"
-        android:layout_height="125dp"
-        android:background="@color/black"
-        android:src="@drawable/local_library" />
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Main Menu"
-        android:textColor="#FFFFFF"
-        android:textSize="30sp" />
 
+
+<ImageView
+    android:layout_width="125dp"
+    android:layout_height="125dp"
+    android:background="@color/teal_200"
+    android:src="@drawable/abc" />
+
+<TextView
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="15dp"
+    android:layout_marginStart="10dp"
+    android:text="Alphabet App"
+    android:textColor="@color/white"
+    android:textSize="30sp" />
+
+<TextView
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="15dp"
+    android:layout_marginStart="10dp"
+    android:text="Take the test now!"
+    android:textColor="@color/white"
+    android:layout_marginBottom="25dp"
+
+    android:textSize="20sp" />
 </LinearLayout>
