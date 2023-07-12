@@ -85,7 +85,7 @@ public class Drawer extends AppCompatActivity {
                         break;
 
                     case R.id.nav_laptop :
-                       
+
                         intent = new Intent(Drawer.this, Previous_Results.class);
                         startActivity(intent);
 
