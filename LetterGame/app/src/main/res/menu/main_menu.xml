@@ -5,7 +5,7 @@
 
         <item
             android:id="@+id/nav_book"
-            android:title="Take Test" />
+            android:title="Play Game" />
         <item
             android:id="@+id/nav_return"
 
