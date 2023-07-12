@@ -85,22 +85,13 @@ public class Drawer extends AppCompatActivity {
                         break;
 
                     case R.id.nav_laptop :
-                        //Toast.makeText(getApplicationContext(),"Laptop intis clicked",Toast.LENGTH_LONG).show();
-                        //drawerLayout.closeDrawer(GravityCompat.START);
+                       
                         intent = new Intent(Drawer.this, Previous_Results.class);
                         startActivity(intent);
 
                         break;
 
-//                    case R.id.nav_voice :
-//                        Toast.makeText(getApplicationContext(),"Voice is clicked",Toast.LENGTH_LONG).show();
-//                        drawerLayout.closeDrawer(GravityCompat.START);
-//                        break;
-//
-//                    case R.id.nav_chrome_reader :
-//                        Toast.makeText(getApplicationContext(),"Chrome Reader is clicked",Toast.LENGTH_LONG).show();
-//                        drawerLayout.closeDrawer(GravityCompat.START);
-//                        break;
+
                 }
 
                 return true;
