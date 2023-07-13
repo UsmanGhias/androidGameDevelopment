@@ -79,3 +79,7 @@ This project is developed by [Usman Ghias]. Special thanks to [Haq Nawaz].
 If you have any questions or feedback regarding the letter game, please contact [https://www.codcrafters.com].
 
 Happy gaming!
+
+## Game Features
+
+This game include sky letter, root letter and grass letter concept for children.
