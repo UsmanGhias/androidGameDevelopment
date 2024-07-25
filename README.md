@@ -76,7 +76,7 @@ Feel free to explore these possibilities and contribute to the game's developmen
 
 This project is developed by [Usman Ghias]. Special thanks to [Haq Nawaz].
 
-If you have any questions or feedback regarding the letter game, please contact [https://www.codcrafters.com].
+If you have any questions or feedback regarding the letter game, please contact [https://www.codcrafters.org].
 
 Happy gaming!
 
